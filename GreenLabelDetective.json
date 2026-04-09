@@ -1,0 +1,136 @@
+{
+  "name": "GreenLabelDetective",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "id": "43fa813b-27b3-4ef9-aae6-851cf82f20b9",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        256,
+        304
+      ],
+      "webhookId": "2b69b43d-26e8-4562-a756-f718ed00d24b",
+      "credentials": {
+        "telegramApi": {
+          "id": "GmLXe2MT9Wbmdbnl",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analyze this product image for greenwashing, identify ingredients, and give an Eco-Score (A-F).",
+        "options": {
+          "systemMessage": "You are the GreenLabel Detective. Your task is to perform a real-time ESG audit on product labels.\n\nExtract Ingredients: List the key chemicals/components.\n\nDetect Greenwashing: Identify vague eco-claims or deceptive imagery.\n\nEco-Score: Assign a grade from A (Sustainable) to F (Harmful).\n4. Reasoning: Provide a 1-sentence explanation for the score."
+        }
+      },
+      "id": "033e2d79-654d-40cd-adb4-f01ea8b94742",
+      "name": "Greenwashing Analyzer",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        480,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "id": "d916120e-ce64-474e-a0b1-40423ea5a871",
+      "name": "Send Analysis",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        832,
+        304
+      ],
+      "webhookId": "7b9384ea-d8c9-4f53-9b47-58eb0b03ed05",
+      "credentials": {
+        "telegramApi": {
+          "id": "GmLXe2MT9Wbmdbnl",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        544,
+        528
+      ],
+      "id": "736fe29b-7ec0-418c-861f-8ad25b66da0c",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qmhocB5eIhHc6gQx",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Greenwashing Analyzer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Greenwashing Analyzer": {
+      "main": [
+        [
+          {
+            "node": "Send Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Greenwashing Analyzer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2454fda9-a577-4e73-85de-3030fef1ce10",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "10a199685de369b1e8ade33356898a630b889c7d35cb8b68e692258c87ecf451"
+  },
+  "id": "c1BT842iqsVfHQe4",
+  "tags": []
+}
