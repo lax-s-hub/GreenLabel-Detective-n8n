@@ -1,5 +1,3 @@
-# GreenLabel-Detective-n8n
-This is the n8n workflow for GreenLabel Detective. It uses Gemini 2.5 Flash for ESG auditing.
 # 🕵️‍♂️ GreenLabel Detective: AI-Powered ESG Auditor
 
 **Unmasking Greenwashing with Agentic Workflows & Computer Vision.**
@@ -30,9 +28,9 @@ Built during the **IBM SkillsBuild 2026** program, this project bridges the gap 
 4. **Output:** The agent sends a structured report back to the user with the final Eco-Score.
 
 ## 📂 Repository Contents
-- `GreenLabelDetective.json`: The full n8n workflow export. (Import this into your n8n instance to replicate the bot).
-- `ConceptNote.pdf`: Detailed project documentation.
-- `LeanCanvas.pdf`: Business model and strategy.
+- [GreenLabelDetective.json](./GreenLabelDetective.json) - Full n8n workflow export.
+- [Concept Note](./ConceptNote- GreenLabel Detective.pdf) - Detailed project documentation.
+- [Lean Canvas](./What gaps are we addressing for our customers.pdf) - Business model and strategy.
 
 ---
 **Developed by:** [Laxmi Sidral](https://github.com/lax-s-hub)  
